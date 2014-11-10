@@ -1,4 +1,5 @@
 import numpy as np
+import traceRoutines as tm
 """
 A collection of tools for tracking or reconstructing the motion of a translation stage used in touch stimulation experiments.
 
@@ -77,8 +78,8 @@ Ex:
 
 epoch   transit times            direction      velocity
 
-1      [0, 620000]          'right'        3 mm/s
-1      [620000, 1250000]    'left'         3 mm/s 
+1      [0, 620000]               'right'        3 mm/s
+1      [620000, 1250000]         'left'         3 mm/s 
 
 All of these values above can be computed from the transit intervals.
 TODO:  Assumes the stage starts near pos = 0, moves negative, and then returns.  Should be generalized.
@@ -92,12 +93,12 @@ def findMotionEpochs(time, pos, mode='exact'):
 
   if mode == 'robust':
     meanP = np.mean(pos)
-    maxLvl -= meanP * .001
-    minLvl += meanP * .001
+    maxLvl -= math.fabs(meanP * .001)
+    minLvl += math.fabs(meanP * .001)
 
   
-  maxInt = findLevels(pos, maxLvl, mode='both', boxWidth=2, rangeSubset=None)
-  minInt = findLevels(pos, minLvl, mode='both', boxWidth=2, rangeSubset=None)
+  maxInt = tm.findLevels(pos, maxLvl, mode='both', boxWidth=2, rangeSubset=None)
+  minInt = tm.findLevels(pos, minLvl, mode='both', boxWidth=2, rangeSubset=None)
   epochs = [minInt, maxInt]
   return epochs
 
