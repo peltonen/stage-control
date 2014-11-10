@@ -1,4 +1,5 @@
 import numpy as np
+import math as math
 import traceRoutines as tm
 """
 A collection of tools for tracking or reconstructing the motion of a translation stage used in touch stimulation experiments.
@@ -93,8 +94,8 @@ def findMotionEpochs(time, pos, mode='exact'):
 
   if mode == 'robust':
     meanP = np.mean(pos)
-    maxLvl -= math.fabs(meanP * .001)
-    minLvl += math.fabs(meanP * .001)
+    maxLvl -= math.fabs(meanP * .01)
+    minLvl += math.fabs(meanP * .01)
 
   
   maxInt = tm.findLevels(pos, maxLvl, mode='both', boxWidth=2, rangeSubset=None)
