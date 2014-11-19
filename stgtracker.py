@@ -105,3 +105,14 @@ def recover3d(lengths, positions, times):
 
 
   return
+
+"""
+Tab for a function that identifies the left and right bounds of a series of sweep stimuli.
+
+
+"""
+
+def parseSweeps()
+
+  return
+
