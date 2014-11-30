@@ -96,15 +96,26 @@ def parseStageTriggers(triggers):
 
 """
 Recover a 3d surface from indenter lengths and stage positions.
+lengths: 2d array where each row is the sampled extension of the indenter arm
+positions: 2d array where each row is the position of the stage
 
 
+X,Y,Z:  2d arrays of identical size, where the corresponding elements are the (x,y,z) coordinates of the 3d surface.
+rstride:  physical distance between X points, in mm.
+cstride:  physical distance between Y positions, in mm.
+
+This format supports use of matplotlib.  i.e.  ax.plot_wireframe(X, Y, Z, rstride, cstride)
 """
 
-def recover3d(lengths, positions, times):
+def recover3d(lengths, positions, ptsPerRow, sweepDist):
+  #general strategy:  interpolate the length and positions, then grab regular samples with an interval of distance traveled / ptsPerRow.
+    
+  numX = 100
+  numY = lengths.shape[1]
 
 
-
-  return
+  cstride = sweepDist
+  return X, Y, Z, rstride, cstride
 
 """
 Tab for a function that identifies the left and right bounds of a series of sweep stimuli.
