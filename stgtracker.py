@@ -1,4 +1,6 @@
 import numpy as np
+import math as math
+import traceRoutines as tm
 """
 A collection of tools for tracking or reconstructing the motion of a translation stage used in touch stimulation experiments.
 
@@ -6,7 +8,7 @@ A collection of tools for tracking or reconstructing the motion of a translation
 
 
 
-__all__ = ['stageIter', 'parse1dMotion', 'recover3d', 'parseStageTriggers']
+__all__ = ['stageIter', 'parse1dMotion', 'recover3d', 'parseStageTriggers', 'findMotionEpochs']
 
 
 """
@@ -70,6 +72,36 @@ def parse1dMotion(triggers, trigStep):
     pos.append(accum)
   return time,pos
 
+"""
+The stage initially moves right, then traces a return path left.  The bidirectional scan may be repeated
+at different velocities in the same trial.
+Ex:
+
+epoch   transit times            direction      velocity
+
+1      [0, 620000]               'right'        3 mm/s
+1      [620000, 1250000]         'left'         3 mm/s 
+
+All of these values above can be computed from the transit intervals.
+TODO:  Assumes the stage starts near pos = 0, moves negative, and then returns.  Should be generalized.
+"""
+
+def findMotionEpochs(time, pos, mode='exact'):
+  assert mode in ('exact', 'robust')
+
+  maxLvl = max(pos)  
+  minLvl = min(pos)
+
+  if mode == 'robust':
+    meanP = np.mean(pos)
+    maxLvl -= math.fabs(meanP * .01)
+    minLvl += math.fabs(meanP * .01)
+
+  
+  maxInt = tm.findLevels(pos, maxLvl, mode='both', boxWidth=2, rangeSubset=None)
+  minInt = tm.findLevels(pos, minLvl, mode='both', boxWidth=2, rangeSubset=None)
+  epochs = [minInt, maxInt]
+  return epochs
 
 """
 Rather specific function for detecting positive direction and negative direction triggers.
@@ -127,3 +159,9 @@ def parseSweeps()
 
   return
 
+<<<<<<< HEAD
+=======
+  return
+
+
+>>>>>>> FETCH_HEAD
