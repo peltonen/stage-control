@@ -100,7 +100,7 @@ def findMotionEpochs(time, pos, mode='exact'):
   
   maxInt = tm.findLevels(pos, maxLvl, mode='both', boxWidth=2, rangeSubset=None)
   minInt = tm.findLevels(pos, minLvl, mode='both', boxWidth=2, rangeSubset=None)
-  epochs = [minInt, maxInt]
+  epochs = [minInt[0], maxInt[0]]
   return epochs
 
 """
