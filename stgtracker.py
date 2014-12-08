@@ -155,13 +155,7 @@ Tab for a function that identifies the left and right bounds of a series of swee
 
 """
 
-def parseSweeps()
+def parseSweeps():
 
   return
 
-<<<<<<< HEAD
-=======
-  return
-
-
->>>>>>> FETCH_HEAD
