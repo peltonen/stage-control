@@ -2,7 +2,7 @@ import numpy as np
 import math as math
 import traceRoutines as tm
 """
-A collection of tools for tracking or reconstructing the motion of a translation stage used in touch stimulation experiments.
+A collection of tools for parsing the motion of the PI C-867 translation stage in touch stimulation experiments.
 
 """
 
@@ -13,8 +13,7 @@ __all__ = ['stageIter', 'parse1dMotion', 'recover3d', 'parseStageTriggers', 'fin
 
 """
 Reconstructs the path of the stage, assuming that it moves stepSize microns by 'col' times to the right, then moves down, then moves
-col times to the left, stopping when the stage has traversed 'row' rows.  By default, stepSize is equal to one, so it will default
-to integer coordinates.
+col times to the left, stopping when the stage has traversed 'row' rows.  By default stepSize is equal to 1 and thus returns 2d coordinates.
 
 Example stage motion for stageXY(2,4):
 
@@ -48,7 +47,7 @@ def stageIter(row, col, stepSize=1):
 
 """
 Parses positive and negative trigger signals to reconstruct the motion of the stage over time.
-Returns a parallel array specificying the position at the time of the triggers.
+Returns a parallel array specifying the position at the time of the triggers.
 For a smoother representation, try scipy.interpolate.inter1d.....
 
 """
